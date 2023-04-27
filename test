@@ -1,0 +1,27 @@
+import requests
+from PIL import Image
+from torchvision.transforms import ToTensor
+import torch.nn.functional as F
+
+# Download image from URL
+url = 'https://example.com/image.jpg'
+response = requests.get(url, stream=True)
+img = Image.open(response.raw)
+
+# Preprocess image
+transform = ToTensor()
+img_tensor = transform(img).unsqueeze(0)
+
+# Load model and make prediction
+model_path = 'path/to/model.pth'
+model = torch.load(model_path)
+model.eval()
+with torch.no_grad():
+    output = model(img_tensor)
+    prob = F.sigmoid(output).item()
+
+# Print result
+if prob > 0.5:
+    print('Emergency situation detected with probability {:.2f}'.format(prob))
+else:
+    print('No emergency situation detected with probability {:.2f}'.format(1 - prob))
