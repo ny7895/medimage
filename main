@@ -1,9 +1,10 @@
 import torch
-import torchvision
 import torch.nn as nn
 import torch.optim as optim
+import torchvision
 from torch.utils.data import DataLoader, Dataset
 from torchvision.transforms import ToTensor
+
 
 class MedicalImageDataset(Dataset):
     def __init__(self, images, labels, transform=None):
@@ -81,4 +82,4 @@ model.to(device)
 for epoch in range(10):
     train_loss = train_model(model, train_loader, criterion, optimizer, device)
     test_acc = test_model(model, test_loader, criterion, device)
-    print('Epoch {}, train loss: {:.4f}, test accuracy: {:.4f}'.format(epoch+1, train_loss, test_acc
+    print ('Epoch {}, train loss: {:.4f}, test accuracy: {:.4f}'.format(epoch+1, train_loss, test_acc))
